@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'base.apps.BaseUserConfig',
     'abstract_user.apps.AbstractUserConfig',
     'f_app.apps.FAppConfig',
     'django.contrib.admin',
@@ -58,7 +59,7 @@ ROOT_URLCONF = 'friend.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [('templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
