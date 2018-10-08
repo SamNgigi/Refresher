@@ -31,9 +31,9 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'base.apps.BaseUserConfig',
-    'abstract_user.apps.AbstractUserConfig',
-    'f_app.apps.FAppConfig',
+    'base.apps.BaseConfig', # mine
+    'abstract_user.apps.AbstractUserConfig', # mine
+    'f_app.apps.FAppConfig', # mine
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -42,7 +42,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
-# AUTH_USER_MODEL = 'abstract_user.CustomUser'
+"""  
+This below tells Django that instead of using the default User model look
+in our app abstract_user for the model called CustomUser and use that
+instead.
+"""
+AUTH_USER_MODEL = 'abstract_user.CustomUser' # I have just added this.
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
