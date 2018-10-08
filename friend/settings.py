@@ -31,15 +31,26 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'base.apps.BaseConfig', # mine
-    'abstract_user.apps.AbstractUserConfig', # mine
-    'f_app.apps.FAppConfig', # mine
+    # Default
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
+    'django.contrib.staticfiles', 
+    # * We use the sites app for configuring each 3rd party provider in
+    # * Admin
+    'django.contrib.sites',
+    # django-allauth manenos
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+
+    # Custom
+    'abstract_user.apps.AbstractUserConfig', 
+    'base.apps.BaseConfig', 
+    'f_app.apps.FAppConfig', 
 ]
 
 """  
@@ -133,6 +144,23 @@ STATIC_URL = '/static/'
 
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
+
+""" 
+We set our AUTHENTICATION_BACKENDS to user the existing ModelBackend so
+can log in to the admin site.
+
+We also add the allauth's specific AuthenticationBackend
+"""
+
+AUTHENTICATION_BACKENDS = (
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
+)
+
+SITE_ID = 1
+
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = False
 
 
 
