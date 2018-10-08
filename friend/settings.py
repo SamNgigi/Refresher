@@ -149,7 +149,9 @@ LOGOUT_REDIRECT_URL = 'home'
 We set our AUTHENTICATION_BACKENDS to user the existing ModelBackend so
 can log in to the admin site.
 
-We also add the allauth's specific AuthenticationBackend
+We also add the allauth's specific AuthenticationBackend.
+
+NOTE django-allauth does not work with django 2.1. It works best
 """
 
 AUTHENTICATION_BACKENDS = (
