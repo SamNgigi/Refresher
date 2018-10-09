@@ -4,17 +4,15 @@ Home
 {% endblock title %}
 
 {% block content %}
-{% load socialaccount %}
 <!DOCTYPE html>
 <h1>Homepage</h1>
 {% if user.is_authenticated %}
 <p>Hi {{ user.username }}</p>
-<p><a href="{% url 'account_logout' %}">Sign Out</a></p>
+<p><a href="{% url 'logout' %}">Sign Out</a></p>
 {% else %}
 <p>
-  <a href="{% url 'account_login' %}">Sign In</a> |
-  <a href="{% url 'account_signup' %}">Sign Up</a> |
-  <a href="{% provider_login_url 'google' %}">Log In with Gmail</a>
+  <a href="{% url 'login' %}">Sign In</a> |
+  <a href="{% url 'signUp' %}">Sign Up</a>
 </p>
 {% endif %}
 {% endblock content %}

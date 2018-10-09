@@ -40,12 +40,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles', 
     # * We use the sites app for configuring each 3rd party provider in
     # * Admin
-    'django.contrib.sites',
+    # 'django.contrib.sites',
     # django-allauth manenos
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.google',
+    # 'allauth',
+    # 'allauth.account',
+    # 'allauth.socialaccount',
+    # 'allauth.socialaccount.providers.google',
 
     # Custom
     'abstract_user.apps.AbstractUserConfig', 
@@ -142,8 +142,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-LOGIN_REDIRECT_URL = 'home'
-LOGOUT_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
 
 """ 
 We set our AUTHENTICATION_BACKENDS to user the existing ModelBackend so
@@ -154,15 +154,15 @@ We also add the allauth's specific AuthenticationBackend.
 NOTE django-allauth does not work with django 2.1. It works best
 """
 
-AUTHENTICATION_BACKENDS = (
-    "django.contrib.auth.backends.ModelBackend",
-    "allauth.account.auth_backends.AuthenticationBackend",
-)
+# AUTHENTICATION_BACKENDS = (
+#     "django.contrib.auth.backends.ModelBackend",
+#     "allauth.account.auth_backends.AuthenticationBackend",
+# )
 
-SITE_ID = 1
+# SITE_ID = 1
 
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_USERNAME_REQUIRED = False
+# ACCOUNT_EMAIL_REQUIRED = True
+# ACCOUNT_USERNAME_REQUIRED = False
 
 
 
