@@ -18,6 +18,8 @@ class CustomUser(AbstractUser):
 
 class Post(models.Model):
   post = models.CharField(max_length = 100)
+  # NOTE we use related name posted to get all articles a user has posted.
+  # i.e user1.posted.all()
   author = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='posted')
   likers =  models.ManyToManyField(CustomUser)
 
@@ -27,3 +29,4 @@ class Post(models.Model):
   class Meta:
     ordering = ('post',)
 
+# from abstract_user.models import CustomUser, Post
