@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+    'django_extensions',
 
     # Custom
     'abstract_user.apps.AbstractUserConfig', 
@@ -152,7 +153,11 @@ can log in to the admin site.
 
 We also add the allauth's specific AuthenticationBackend.
 
-NOTE django-allauth does not work with django 2.1. It works best
+NOTE django-allauth does not work with django 2.1. It works best with
+Django 2.0.
+
+Also we have to use django-allauth version 0.32.0 for the social
+authentication to work.
 """
 
 AUTHENTICATION_BACKENDS = (
