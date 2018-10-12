@@ -172,6 +172,12 @@ SITE_ID = 1
 
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
+# NOTE 
+# Needed to add the code below for it to stop giving me connection
+# refused error 
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+
+
 
 
 

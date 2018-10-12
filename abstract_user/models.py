@@ -1,4 +1,5 @@
 from django.contrib.auth.models import AbstractUser, UserManager
+from django.db import models
 
 # Create models here
 """  
@@ -14,3 +15,9 @@ class CustomUserManager(UserManager):
 
 class CustomUser(AbstractUser):
   objects = CustomUserManager()
+
+class Post(models.Model):
+  post = models.CharField(max_length = 100)
+  author = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+  likers =  models.ManyToManyField(CustomUser)
+
