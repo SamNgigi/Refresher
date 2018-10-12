@@ -40,5 +40,5 @@ class Post(models.Model):
     ordering = ('content',)
 
 class Friendsters(models.Model):
-  user = models.OneToOneField(User, related_name='profile')
-  follow = models.ManyToManyField(User, related_name=followed_by)
+  user = models.OneToOneField(User, related_name='profile', on_delete=models.CASCADE)
+  follow = models.ManyToManyField(User, related_name='followed_by')
