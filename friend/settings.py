@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'friend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'friend',
+        'NAME': 'many_test',
         'USER': 'sam',
         'PASSWORD': 'Sam'
     }
