@@ -26,7 +26,7 @@ console.log(post_list_objects.constructor.name);
 post_list.forEach(element => {
 
   almost_there = element.lastElementChild.children;
-  console.log(almost_there);
+  // console.log(almost_there);
 
   [...almost_there].forEach(a_tag => {
     // console.log(a_tag.getAttribute('data-id'));
@@ -42,9 +42,11 @@ post_list.forEach(element => {
       // console.log(event.target.getAttribute('data-id'));
       // Below we return the exact path.
       post_id = event.target.getAttribute('data-id')
-      console.log(event.target.pathname);
+      console.log(a_tag.previousSibling.textContent);
 
       like_url = event.target.pathname;
+
+      like_value = a_tag.previousSibling
 
       $.ajax({
         'type': "POST",
@@ -54,8 +56,9 @@ post_list.forEach(element => {
         },
         'data': post_id,
         success: (whatever) => {
-          console.log(whatever['success']);
-          console.log(whatever['post_likes']);
+          // console.log(whatever['success']);
+          // console.log(whatever['post_likes']);
+          like_value.textContent = `${whatever['post_likes']} likes | `
         }
       })
 
