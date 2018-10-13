@@ -1,3 +1,20 @@
+function parse_cookies() {
+  var cookies = {};
+  if (document.cookie && document.cookie !== '') {
+    document.cookie.split(';').forEach(function (c) {
+      var m = c.trim().match(/(\w+)=(.*)/);
+      if (m !== undefined) {
+        cookies[m[1]] = decodeURIComponent(m[2]);
+      }
+    });
+  }
+  return cookies;
+}
+
+console.log(parse_cookies())
+
+const cookies = parse_cookies()
+
 console.log("Hi there!");
 const post_list_objects = document.querySelector('.post-list').children;
 post_list = Array.from(post_list_objects)
@@ -9,7 +26,7 @@ console.log(post_list_objects.constructor.name);
 post_list.forEach(element => {
 
   almost_there = element.lastElementChild.children;
-  // console.log(almost_there);
+  console.log(almost_there);
 
   [...almost_there].forEach(a_tag => {
     // console.log(a_tag.getAttribute('data-id'));
@@ -24,27 +41,36 @@ post_list.forEach(element => {
       // Data attribute
       // console.log(event.target.getAttribute('data-id'));
       // Below we return the exact path.
+      post_id = event.target.getAttribute('data-id')
       console.log(event.target.pathname);
 
       like_url = event.target.pathname;
 
-      const xhr = new XMLHttpRequest();
-
-      xhr.open("POST", like_url.true);
-
-      xhr.setRequestHeader(
-        'Content-type',
-        'application/json'
-      );
-
-      xhr.onload = () => {
-        if (this.status === 200) {
-          console.log(`Seems like it was a success. ${this.responseText}`);
-        } else {
-          console.log("Something happened or rather something did not happen.")
+      $.ajax({
+        'type': "POST",
+        'url': like_url,
+        'headers': {
+          "X-CSRFToken": cookies['csrftoken']
+        },
+        'data': post_id,
+        success: (whatever) => {
+          console.log(whatever['success']);
+          console.log(whatever['post_likes']);
         }
-      }
-      xhr.send()
+      })
+
+      // const xhr = new XMLHttpRequest();
+
+      // const data = event.target.getAttribute('data-id')
+
+
+      // xhr.open("POST", like_url, true);
+
+      // xhr.setRequestHeader(
+      //   'X-CSRFToken', cookies['csrftoken']
+      // );
+
+      // xhr.send('postID=' + encodeURIComponent(data));
     })
   })
 

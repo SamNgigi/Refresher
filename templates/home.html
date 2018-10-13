@@ -24,7 +24,12 @@ Home
     <br>
     <br>
     <!-- Note the lack of brackets -->
-    <span>{{posting.likers.all.count}} likes | <a id="likeButton" data-id="{{posting.pk}}" href="{% url 'like' post_pk=posting.pk %}">like</a></span>
+    <span>{{posting.likers.all.count}} likes |
+      <a id="likeButton" data-id="{{posting.pk}}" href="{% url 'like' post_pk=posting.pk %}">
+        {% csrf_token %}
+        like
+      </a>
+    </span>
   </li>
 
   {% empty %}
