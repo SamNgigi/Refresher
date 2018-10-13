@@ -7,15 +7,42 @@ Home
 {% endblock title %}
 
 {% block content %}
+
 <h1>Homepage</h1>
+
 {% if user.is_authenticated %}
+
 <p>Hi {{ user.username }}</p>
 <p><a href="{% url 'account_logout' %}">Sign Out</a></p>
+
+<ul>
+  {% for posting in post_list %}
+
+  <li>
+    {{ posting.post }}
+    <br>
+    <span>-{{posting.author.username}}</span>
+    <br>
+    <br>
+    <!-- Note the lack of brackets -->
+    <span>{{posting.likers.all.count}} likes | <a href="{% url 'like' post_pk=posting.pk %}">like</a></span>
+  </li>
+
+  {% empty %}
+
+  <li>No posts yet</li>
+
+  {% endfor %}
+</ul>
+
 {% else %}
+
 <p>
   <a href="{% url 'account_login' %}">Sign In</a> |
   <a href="{% url 'account_signup' %}">Sign Up</a> |
   <a href="{% provider_login_url 'google' %}">Log In with Gmail</a>
 </p>
+
 {% endif %}
+
 {% endblock content %}

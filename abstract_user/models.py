@@ -29,4 +29,15 @@ class Post(models.Model):
   class Meta:
     ordering = ('post',)
 
+  @classmethod
+  def toggle_like(cls , user, post_id):
+    post = cls.objects.get(pk=post_id)
+    if user in post.likers.all():
+      post.likers.remove(user)
+    else:
+      post.likers.add(user)
+    return post
+
+
+
 # from abstract_user.models import CustomUser, Post
