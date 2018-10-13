@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-
 {% load socialaccount %}
 
 {% block title %}
@@ -15,7 +14,7 @@ Home
 <p>Hi {{ user.username }}</p>
 <p><a href="{% url 'account_logout' %}">Sign Out</a></p>
 
-<ul>
+<ul class="post-list">
   {% for posting in post_list %}
 
   <li>
@@ -25,7 +24,7 @@ Home
     <br>
     <br>
     <!-- Note the lack of brackets -->
-    <span>{{posting.likers.all.count}} likes | <a href="{% url 'like' post_pk=posting.pk %}">like</a></span>
+    <span>{{posting.likers.all.count}} likes | <a id="likeButton" data-id="{{posting.pk}}" href="{% url 'like' post_pk=posting.pk %}">like</a></span>
   </li>
 
   {% empty %}
