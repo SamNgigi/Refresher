@@ -13,7 +13,7 @@ post_list.forEach(element => {
 
   [...almost_there].forEach(a_tag => {
     // console.log(a_tag.getAttribute('data-id'));
-    like_btn = a_tag.getAttribute('data-id');
+    // like_btn = a_tag.getAttribute('data-id');
 
 
 
@@ -21,8 +21,30 @@ post_list.forEach(element => {
 
     a_tag.addEventListener('click', (event) => {
       event.preventDefault();
-      console.log(event.target.getAttribute('data-id'));
-      // console.log(event)
+      // Data attribute
+      // console.log(event.target.getAttribute('data-id'));
+      // Below we return the exact path.
+      console.log(event.target.pathname);
+
+      like_url = event.target.pathname;
+
+      const xhr = new XMLHttpRequest();
+
+      xhr.open("POST", like_url.true);
+
+      xhr.setRequestHeader(
+        'Content-type',
+        'application/json'
+      );
+
+      xhr.onload = () => {
+        if (this.status === 200) {
+          console.log(`Seems like it was a success. ${this.responseText}`);
+        } else {
+          console.log("Something happened or rather something did not happen.")
+        }
+      }
+      xhr.send()
     })
   })
 

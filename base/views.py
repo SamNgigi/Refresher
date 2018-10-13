@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, ListView
 
 from abstract_user.models import CustomUser, Post
@@ -26,7 +26,7 @@ def like(request, post_pk):
   # print(post)
 
 
-  return render(request, 'home.html')
+  return redirect('home')
 
 
 
