@@ -31,7 +31,7 @@ def like(request, post_pk):
     'post_likes': post.likers.all().count()
   }
 
-  # print(post)
+  print(post)
 
 
   # return redirect('home')

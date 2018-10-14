@@ -42,47 +42,42 @@ post_list.forEach(element => {
       // console.log(event.target.getAttribute('data-id'));
       // Below we return the exact path.
       post_id = event.target.getAttribute('data-id')
-      console.log(a_tag.previousSibling.textContent);
+      // console.log(a_tag.previousSibling.textContent);
 
       like_url = event.target.pathname;
 
       like_value = a_tag.previousSibling
 
-      $.ajax({
-        'type': "POST",
-        'url': like_url,
-        'headers': {
-          "X-CSRFToken": cookies['csrftoken']
-        },
-        'data': post_id,
-        success: (whatever) => {
-          // console.log(whatever['success']);
-          // console.log(whatever['post_likes']);
-          like_value.textContent = `${whatever['post_likes']} likes | `
-        }
-      })
-
-      // const xhr = new XMLHttpRequest();
+      const xhr = new XMLHttpRequest();
 
       // const data = event.target.getAttribute('data-id')
 
+      // * Making the request
+      xhr.open("POST", like_url, true);
 
-      // xhr.open("POST", like_url, true);
+      // * Passing django required csrf token
+      xhr.setRequestHeader('X-CSRFToken', cookies['csrftoken']);
 
-      // xhr.setRequestHeader(
-      //   'X-CSRFToken', cookies['csrftoken']
-      // );
+      //  * Vanilla Js equivalent of ajax success function
+      xhr.onload = () => {
+        if (xhr.status >= 200 && xhr.status < 400) {
+          let res_data = xhr.responseText;
+          // * Converting data to js object
+          let res = JSON.parse(res_data)
+          console.log(`Worked: ${res['success']}`);
+          console.log(`New likes: ${res['post_likes']}`);
+          like_value.textContent = `${res['post_likes']} likes | `
+        } else {
+          console.log('Lets try again');
+        }
+      }
+      // * Sends to back end
+      xhr.send(post_id);
+      /*  
+       * When we make a GET request, the send method has nothing to send.
+       */
 
-      // xhr.send('postID=' + encodeURIComponent(data));
     })
   })
 
 })
-
-// like_button.addEventListener('click', (event) => {
-//   event.preventDefault()
-//   console.log(event.target);
-//   // let self = this
-//   // url = 'ajax/like/'
-
-// })
