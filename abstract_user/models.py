@@ -16,6 +16,26 @@ class CustomUserManager(UserManager):
 class CustomUser(AbstractUser):
   objects = CustomUserManager()
 
+class Profile(models.Model):
+  """  
+  Here we use prof.following.all to get all the users a person is
+  following and user.followers to get all people who a user is followed by 
+  """
+
+  user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+  following = models.ManyToManyField(CustomUser, related_name='followers')
+
+
+  def __str__(self):
+    return self.user.username
+
+  class Meta:
+    ordering = ('user',)
+
+  @classmethod
+  def toggle_follow(cls, current_user, friend):
+    pass
+
 class Post(models.Model):
   post = models.CharField(max_length = 100)
   # NOTE we use related name posted to get all articles a user has posted.
@@ -40,4 +60,3 @@ class Post(models.Model):
 
 
 
-# from abstract_user.models import CustomUser, Post

@@ -42,7 +42,10 @@ post_list.forEach(element => {
       // console.log(event.target.getAttribute('data-id'));
       // Below we return the exact path.
       post_id = event.target.getAttribute('data-id')
-      // console.log(a_tag.previousSibling.textContent);
+      // console.log(a_tag.textContent);
+
+      // * Ternary statement to account for if like text is like or unlike
+      a_tag.textContent = a_tag.textContent === 'like' ? 'unlike' : 'like';
 
       like_url = event.target.pathname;
 
