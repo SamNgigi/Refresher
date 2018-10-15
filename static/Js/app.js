@@ -44,6 +44,9 @@ post_list.forEach(element => {
       post_id = event.target.getAttribute('data-id')
       // console.log(a_tag.previousSibling.textContent);
 
+      // * Ternary statement to account for if like text is like or unlike
+      a_tag.textContent = a_tag.textContent === 'unlike' ? 'like' : 'unlike';
+
       like_url = event.target.pathname;
 
       like_value = a_tag.previousSibling
