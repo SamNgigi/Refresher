@@ -35,6 +35,23 @@ Home
   {% endfor %}
 </ul>
 
+<ul>
+  {% for user in user_list %}
+  <li>{{user.username}}</li>
+  {% endfor %}
+</ul>
+<!-- I have created profiles for some of the users not all -->
+<ul>
+  {% for user in profiles %}
+  <li>{{user}}</li>
+  {% endfor %}
+</ul>
+<ul>
+  {% for user in profile_list %}
+  <li>{{user}}</li>
+  {% endfor %}
+</ul>
+
 {% else %}
 
 <p>

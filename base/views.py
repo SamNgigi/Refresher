@@ -14,11 +14,14 @@ class HomepageView(ListView):
     context = super(HomepageView, self).get_context_data(**kwargs)
     context['user_list'] = CustomUser.objects.all(); 
     context['post_list'] = Post.objects.all();
+    context['profiles'] = Profile.objects.all();
     return context
   
   def get_queryset(self):
     current_user = self.request.user
-    return Profile.others(current_user)
+    profile_list = Profile.others(current_user)
+    print(profile_list)
+    return profile_list
   
 
 
