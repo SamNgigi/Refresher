@@ -1,6 +1,8 @@
 from django.contrib.auth.models import AbstractUser, UserManager
 from django.db import models
 
+from django.db.models.signals import post_save
+
 # Create models here
 """  
 Here we create our Custom User model as well as a corresponding manager 
@@ -16,25 +18,60 @@ class CustomUserManager(UserManager):
 class CustomUser(AbstractUser):
   objects = CustomUserManager()
 
+
+
+class ProfileManager(models.Manager):
+
+  def others(self):
+    all_profiles = self.get_queryset().all()
+
+    try:
+      if self.instance:
+        others = all_profiles.exclude(user=self.instance)
+    except self.DoesNotExist:
+      pass
+    return others
+
+  def toggle_follow(self, current_user, friend):
+    user_profile, created = Profile.objects.get_or_create(user=current_user)
+    if friend in user_profile.following.all():
+      user_profile.following.remove(friend)
+    else:
+      user_profile.following.add(friend)
+    return user_profile
+
+
 class Profile(models.Model):
   """  
   Here we use prof.following.all to get all the users a person is
   following and user.followers to get all people who a user is followed by 
   """
 
-  user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+  user_profile = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
   following = models.ManyToManyField(CustomUser, related_name='followers')
 
 
   def __str__(self):
-    return self.user.username
+    return self.user_profile.username
 
   class Meta:
-    ordering = ('user',)
+    ordering = ('user_profile',)
 
   @classmethod
   def toggle_follow(cls, current_user, friend):
-    pass
+    user_profile, created = cls.objects.get_or_create(user_profile=current_user)
+    if friend in user_profile.following.all():
+      user_profile.following.remove(friend)
+    else:
+      user_profile.following.add(friend)
+    return user_profile
+
+  @classmethod
+  def others(cls, current_user):
+    others = cls.objects.exclude(user_profile=current_user)
+    return others
+
+  
 
 class Post(models.Model):
   post = models.CharField(max_length = 100)
@@ -59,4 +96,8 @@ class Post(models.Model):
     return post
 
 
+def post_save_user_receiver(sender, instance, created, *args, **kwargs):
+  if created:
+    new_profile = Profile.objects.get_or_create(user=instance)
 
+post_save.connect(post_save_user_receiver, sender=CustomUser)
