@@ -12,7 +12,7 @@ class HomepageView(ListView):
   template_name = 'home.html'
   def get_context_data(self, **kwargs):
     context = super(HomepageView, self).get_context_data(**kwargs)
-    context['user_list'] = CustomUser.objects.all(); 
+    context['user_list'] = CustomUser.objects.all().exclude(username=self.request.user); 
     context['post_list'] = Post.objects.all();
     context['profiles'] = Profile.objects.all();
     return context
@@ -20,7 +20,7 @@ class HomepageView(ListView):
   def get_queryset(self):
     current_user = self.request.user
     profile_list = Profile.others(current_user)
-    print(profile_list)
+    # print(profile_list)
     return profile_list
   
 
@@ -47,16 +47,25 @@ def like(request, post_pk):
   # return redirect('home')
   return JsonResponse(data)
 
-def follow(request, friend_pk):
+def follow(request, friend):
 
   current_user = request.user
 
-  profile = Profile.toggle_follow(current_user, friend_pk)
+  profile = Profile.toggle_follow(current_user.id, friend)
 
-  data = {
-    'success': 'This is from views. You toggled friend',
-    'following': profile.following.all()
-  }
+  # if friend in current_user.profile.following.all():
+  #   current_user.profile.following.remove(friend)
+  # else:
+  #   current_user.profile.following.add(friend) 
+
+  print(profile)
+
+  # data = {
+  #   'success': 'This is from views. You toggled friend',
+  #   'following': profile.following.all()
+  # }
+
+  return redirect('home')
 
   
 

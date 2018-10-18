@@ -20,25 +20,25 @@ class CustomUser(AbstractUser):
 
 
 
-class ProfileManager(models.Manager):
+# class ProfileManager(models.Manager):
 
-  def others(self):
-    all_profiles = self.get_queryset().all()
+#   def others(self):
+#     all_profiles = self.get_queryset().all()
 
-    try:
-      if self.instance:
-        others = all_profiles.exclude(user=self.instance)
-    except self.DoesNotExist:
-      pass
-    return others
+#     try:
+#       if self.instance:
+#         others = all_profiles.exclude(user_profile=self.instance)
+#     except self.DoesNotExist:
+#       pass
+#     return others
 
-  def toggle_follow(self, current_user, friend):
-    user_profile, created = Profile.objects.get_or_create(user=current_user)
-    if friend in user_profile.following.all():
-      user_profile.following.remove(friend)
-    else:
-      user_profile.following.add(friend)
-    return user_profile
+#   def toggle_follow(self, current_user, friend):
+#     user_profile, created = Profile.objects.get_or_create(user_profile=current_user)
+#     if friend in user_profile.following.all():
+#       user_profile.following.remove(friend)
+#     else:
+#       user_profile.following.add(friend)
+#     return user_profile.following.all()
 
 
 class Profile(models.Model):
@@ -50,6 +50,8 @@ class Profile(models.Model):
   user_profile = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
   following = models.ManyToManyField(CustomUser, related_name='followers')
 
+  # objects = ProfileManager()
+
 
   def __str__(self):
     return self.user_profile.username
@@ -59,12 +61,14 @@ class Profile(models.Model):
 
   @classmethod
   def toggle_follow(cls, current_user, friend):
-    user_profile, created = cls.objects.get_or_create(user_profile=current_user)
-    if friend in user_profile.following.all():
-      user_profile.following.remove(friend)
+    profile = cls.objects.get(user_profile=current_user)
+    # * I had to get the actual friend object.
+    f = CustomUser.objects.get(pk = friend)
+    if f in profile.following.all():
+      profile.following.remove(f)
     else:
-      user_profile.following.add(friend)
-    return user_profile
+      profile.following.add(f)
+    return profile.following.all()
 
   @classmethod
   def others(cls, current_user):

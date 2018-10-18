@@ -5,4 +5,5 @@ urlpatterns = [
   path('', views.HomepageView.as_view(), name='home'),
   #  path('', views.index, name='home'),
    path('ajax/like/<int:post_pk>/', views.like, name='like'),
+   path('ajax/follow/<int:friend>/', views.follow, name='follow'),
 ]

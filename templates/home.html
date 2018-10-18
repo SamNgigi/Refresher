@@ -11,9 +11,34 @@ Home
 
 {% if user.is_authenticated %}
 
-<p>Hi {{ user.username }}</p>
-<p><a href="{% url 'account_logout' %}">Sign Out</a></p>
+<p>Hi {{ user.username }} | <span><a href="{% url 'account_logout' %}">Sign Out</a></span></p>
+<h3>Users</h3>
+<p>Here are other users on this platform</p>
+<ul>
+  {% for user in user_list %}
+  <li>
+    {{user}}
+    <span>
+      <a href="{% url 'follow' friend=user.pk %}">
+        {% csrf_token %}
+        follow
+      </a>
+    </span>
+  </li>
+  {% endfor %}
+</ul>
 
+<h3>Following</h3>
+<p>You are following:</p>
+<ul>
+  {% for friend in request.user.profile.following.all %}
+  <li>{{ friend }}</li>
+  {% empty %}
+  <li>No one yet</li>
+  {% endfor %}
+</ul>
+<!-- Posts -->
+<h3>Posts</h3>
 <ul class="post-list">
   {% for posting in post_list %}
 
@@ -35,17 +60,7 @@ Home
   {% endfor %}
 </ul>
 
-<ul>
-  {% for user in user_list %}
-  <li>{{user.username}}</li>
-  {% endfor %}
-</ul>
 <!-- I have created profiles for some of the users not all -->
-<ul>
-  {% for user in profiles %}
-  <li>{{user}}</li>
-  {% endfor %}
-</ul>
 <ul>
   {% for user in profile_list %}
   <li>{{user}}</li>
