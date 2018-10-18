@@ -60,10 +60,10 @@ class Profile(models.Model):
     ordering = ('user_profile',)
 
   @classmethod
-  def toggle_follow(cls, current_user, friend):
+  def toggle_follow(cls, current_user, friend_id):
     profile = cls.objects.get(user_profile=current_user)
     # * I had to get the actual friend object.
-    fam = CustomUser.objects.get(pk = friend)
+    fam = CustomUser.objects.get(pk = friend_id)
     if fam in profile.following.all():
       profile.following.remove(fam)
     else:

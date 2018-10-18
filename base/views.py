@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
+from django.core import serializers
+import json
 from django.views.generic import TemplateView, ListView
 
 from abstract_user.models import CustomUser, Post, Profile
@@ -47,25 +49,22 @@ def like(request, post_pk):
   # return redirect('home')
   return JsonResponse(data)
 
-def follow(request, friend):
+def follow(request, friend_id):
 
   current_user = request.user
 
-  profile = Profile.toggle_follow(current_user.id, friend)
-
-  # if friend in current_user.profile.following.all():
-  #   current_user.profile.following.remove(friend)
-  # else:
-  #   current_user.profile.following.add(friend) 
+  profile = Profile.toggle_follow(current_user.id, friend_id)
+  data = serializers.serialize("json", profile)
 
   print(profile)
 
-  # data = {
-  #   'success': 'This is from views. You toggled friend',
-  #   'following': profile.following.all()
-  # }
+  res = {
+    'success': 'This is from views. You toggled friend',
+    'following': json.loads(data)
+  }
 
-  return redirect('home')
+  # return redirect('home')
+  return JsonResponse(res, content_type='application/json')
 
   
 

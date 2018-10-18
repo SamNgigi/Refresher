@@ -11,11 +11,11 @@ function parse_cookies() {
   return cookies;
 }
 
-console.log(parse_cookies())
+// console.log(parse_cookies())
 
 const cookies = parse_cookies()
 
-console.log("Hi there!");
+// console.log("Hi there!");
 const post_list_objects = document.querySelector('.post-list').children;
 post_list = Array.from(post_list_objects)
 // * returns objects

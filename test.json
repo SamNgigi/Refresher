@@ -1,0 +1,18 @@
+[{
+  "model": "abstract_user.customuser",
+  "pk": 3,
+  "fields": {
+    "password": "pbkdf2_sha256$100000$Z7U2Hlg1FVCe$TnLZZw7ZNzQfiNnVLcgKCdoZOJ5zeC86/7Dov6sGBXM=",
+    "last_login": "2018-10-12T21:48:29.245Z",
+    "is_superuser": false,
+    "username": "steve",
+    "first_name": "",
+    "last_name": "",
+    "email": "steve@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2018-10-12T21:48:28.632Z",
+    "groups": [],
+    "user_permissions": []
+  }
+}]
